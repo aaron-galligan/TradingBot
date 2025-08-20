@@ -40,7 +40,9 @@ data/
 
 # Environment variables
 .env
+botenv
 
 # OS specific
 .DS_Store
 Thumbs.db
+

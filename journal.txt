@@ -1,0 +1,5 @@
+2025/08/15
+
+Had sucess with importing much of the data but still having trouble with getting the ticker.info data from a given date.
+
+In general I don't think free API's provide daily historical fundermentals data.
