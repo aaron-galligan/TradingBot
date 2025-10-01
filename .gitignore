@@ -41,6 +41,7 @@ data/
 # Environment variables
 .env
 botenv
+saved_vars
 
 # OS specific
 .DS_Store
