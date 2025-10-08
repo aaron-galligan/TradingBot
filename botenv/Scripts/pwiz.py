@@ -1,4 +1,4 @@
-#!c:\users\aaron\onedrive\documents\programming\python\tradingbot\botenv\scripts\python.exe
+#!C:\Users\azzag\Documents\Programming\Python\TradingBot\botenv\Scripts\python.exe
 
 import datetime
 import os

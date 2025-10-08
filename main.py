@@ -9,6 +9,7 @@ logging.basicConfig(filename='main.log', level=logging.INFO)
 
 
 
+
 def main():
     print('start')
     logging.info(f"Starting addition")
