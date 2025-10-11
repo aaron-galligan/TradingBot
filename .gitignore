@@ -40,8 +40,9 @@ data/
 
 # Environment variables
 .env
-botenv
+botenv/
 saved_vars
+saved_vars/old
 
 # OS specific
 .DS_Store
