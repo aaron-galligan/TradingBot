@@ -43,6 +43,7 @@ data/
 botenv/
 saved_vars
 saved_vars/old
+Old_scraper
 
 # OS specific
 .DS_Store

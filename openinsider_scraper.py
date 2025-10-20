@@ -212,22 +212,31 @@ class OpenInsiderScraper:
             self.logger.warning(f"Error filtering data: {str(e)}")
             return False
     
-    def scrape(self) -> None:
+    def scrape(self, startdate: Optional[str] = None) -> pd.DataFrame:
         self.logger.info("Starting scraping process...")
         
         all_data = []
         current_year = datetime.now().year
         current_month = datetime.now().month
+
+        if startdate:
+            dt = datetime.strptime(startdate, '%Y-%m-%d')
+            start_year = dt.year
+            start_month = dt.month
+        else:
+            start_year = self.config.start_year
+            start_month = self.config.start_month
+
         
         with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
             futures = []
             total_months = sum(
                 12 if year != current_year else current_month
-                for year in range(self.config.start_year, current_year + 1)
+                for year in range(start_year, current_year + 1)
             )
             
-            for year in range(self.config.start_year, current_year + 1):
-                start_month = 1 if year != self.config.start_year else self.config.start_month
+            for year in range(start_year, current_year + 1):
+                start_month = 1 if year != start_year else start_month
                 end_month = current_month if year == current_year else 12
                 
                 for month in range(start_month, end_month + 1):
@@ -243,7 +252,9 @@ class OpenInsiderScraper:
                         self.logger.error(f"Error processing month: {str(e)}")
         
         self.logger.info(f"Scraping completed. Found {len(all_data)} transactions.")
-        self._save_data(all_data)
+        df = self._save_data(all_data)
+        return df
+
     
     def _save_data(self, data: List[tuple]) -> None:
         field_names = ['transaction_date', 'trade_date', 'ticker', 'company_name', 
@@ -259,6 +270,7 @@ class OpenInsiderScraper:
             df.to_parquet(output_path, index=False)
         
         self.logger.info(f"Data saved to {output_path}")
+        return df
 
 if __name__ == '__main__':
     try:
