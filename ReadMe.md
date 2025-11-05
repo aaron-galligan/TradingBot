@@ -63,4 +63,7 @@ Notes and caveats
 
 - Use the `Update_dataset.ipynb` pipeline to add new scraped months of data and to regenerate features.
 
+Atribution
+----------
 
+The scraper is from sd3v with minor changes made and can be found at https://github.com/sd3v/openinsiderData

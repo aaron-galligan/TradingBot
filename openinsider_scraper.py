@@ -1,3 +1,6 @@
+#Attribution.
+#The scraper is from sd3v with minor changes made and can be found at https://github.com/sd3v/openinsiderData
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
