@@ -18,7 +18,7 @@ def clean_scraped_data(df):
             df[i]
             .astype(str)
             .str.replace('New', '1000000000', regex=False)
-            .str.replace('[\$,\+\-\%>]', '', regex=True)
+            .str.replace('[\\$,\+\-\%>]', '', regex=True)
             .astype(float)
         )
 
@@ -26,10 +26,15 @@ def clean_scraped_data(df):
     df['trade_date'] = pd.to_datetime(df['trade_date'])
 
     MARKET_OPEN = time(9, 30)
+
     def adjust_transaction_date(dt):
         dt = pd.to_datetime(dt)
+        # If before market open, shift one day back
         if dt.time() < MARKET_OPEN:
-            return (dt - pd.Timedelta(days=1)).date()
+            dt = dt - pd.Timedelta(days=1)
+        # If the previous day was Sunday, move to Friday (2 days earlier)
+        if dt.weekday() == 6:  # 6 = Sunday
+            dt = dt - pd.Timedelta(days=2)
         return dt.date()
 
     df['eff_trans_date'] = df['transaction_date'].apply(adjust_transaction_date)
@@ -242,6 +247,12 @@ def add_features(df):
 
 
 def pull_data(startdate, filtered = True):
+    '''
+    Input:
+    startdate: string in format 'YYYY-MM-DD'.
+
+    returns: Month of data starting from the first of that month,
+    '''
 
     scraper = OIScraper.OpenInsiderScraper()
 
@@ -258,6 +269,7 @@ def pull_data(startdate, filtered = True):
     if filtered:
         print('Removeing trades with out of range or missing values.')
         df = df.dropna()
+        df = df[df['last_price'] > 2]
         df = df[(df[['last_price', 'Qty', 'shares_held', 'Owned', 'Value', 'Owned_norm', 'title_rank', 'filing_lad_days', 'same_day_trade_count']] >= 0).all(axis=1)]
 
     return df
