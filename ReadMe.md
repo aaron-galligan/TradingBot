@@ -3,9 +3,9 @@ TradingBot
 
 Does it work? Yes.
 
-Should you use it? Hell no.
+Should you use it? Plz don't.
 
-As of 25/10/2025 the theoretical returns of this model mean you *double* your money each year, sounds great. But, this does not account for trading fees and the market spread when buying and selling stocks. The code is also currently spaghetti so you'll do well to actually put it to use.
+As of 25/10/2025 the theoretical returns indicate you would *double* your money each year, sounds great. But, this does not account for trading fees and the market spread when buying and selling stocks, and the majority of the returns are made on large swings on small cap stocks. The code is also currently spaghetti so you'll do well to actually put it to use.
 
 
 
